@@ -3,26 +3,32 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-3">
-                <div class="row mb-5">
-                    <div class="col">
-                        <img class="mr-3" src="img/ingredients.png" alt="">Мои рецепты
-                    </div>
-                </div>
+            <div class="col-3 mt-3">
                 <div class="row">
-                    <div class="col">
-                        <img class="mr-3" src="img/recipe.png" alt="">Ингредиенты
+                    <div class="col menu">
+                        <a href=""><img class="mr-3" src="img/ingredients.png" alt="">Мои рецепты</a>
                     </div>
                 </div>
+                <hr>
+                <div class="row">
+                    <div class="col menu">
+                        <a href=""><img class="mr-3" src="img/recipe.png" alt="">Ингредиенты</a>
+                    </div>
+                </div>
+                <hr>
             </div>
 
-            <div class="col-9">
+            <div class="col-1">
+                <hr id="border-vertical">
+            </div>
+
+            <div class="col-8 mt-4">
                 <div class="row mb-3">
-                    <div class="col">
+                    <div class="col my-recipe">
                         Мои рецепты
                     </div>
                     <div class="col text-right">
-                        <button>Добавить рецепт</button>
+                        <a id="add" href="">Добавить рецепт</a>
                     </div>
                 </div>
 
