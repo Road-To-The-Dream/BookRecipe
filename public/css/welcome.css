@@ -1,6 +1,6 @@
 html, body {
     background: url('/img/background.jpg') repeat #fff;
-    color: #636b6f;
+    font-size: 16px;
     font-family: 'Nunito', sans-serif;
     font-weight: 200;
     height: 100vh;
@@ -50,4 +50,38 @@ html, body {
 
 .m-b-md {
     margin-bottom: 30px;
+}
+
+.table-bordered {
+    border: 2px solid #000000;
+}
+
+.table-bordered tr > td:nth-child(2), tr > th:nth-child(2) {
+    border-right: 2px solid #000000;
+    border-left: 2px solid #000000;
+}
+
+.table-head > th:nth-child(3) {
+    width: 200px;
+}
+
+.table-head > th {
+    position: relative;
+    font-size: 18px;
+}
+
+.sorting {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+
+.table .thead-dark th {
+    color: #fff;
+    background-color: #8a8a8a;
+    border-color: #454d55;
+}
+
+tr > td > img:nth-child(1), tr > td > img:nth-child(2) {
+    margin-right: 8px;
 }
