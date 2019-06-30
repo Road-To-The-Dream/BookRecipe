@@ -2,17 +2,19 @@
 
 @section('content')
     <div class="container">
+
         <div class="row">
             <div class="col-3 mt-3">
                 <div class="row">
                     <div class="col menu">
-                        <a href=""><img class="mr-3" src="img/ingredients.png" alt="">Мои рецепты</a>
+                        <a href="/home"><img class="mr-3" src="{{ asset('img/ingredients.png') }}"
+                                                            alt="">Мои рецепты</a>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col menu">
-                        <a href=""><img class="mr-3" src="img/recipe.png" alt="">Ингредиенты</a>
+                        <a href=""><img class="mr-3" src="{{ asset('img/recipe.png') }}" alt="">Ингредиенты</a>
                     </div>
                 </div>
                 <hr>
@@ -22,13 +24,13 @@
                 <hr id="border-vertical">
             </div>
 
-            <div class="col-8 mt-4">
+            <div class="col-8 mt-4 content">
                 <div class="row mb-3">
                     <div class="col my-recipe">
                         Мои рецепты
                     </div>
                     <div class="col text-right">
-                        <a id="add" href="">Добавить рецепт</a>
+                        <a id="add" href="javascript:create();">Добавить рецепт</a>
                     </div>
                 </div>
 
@@ -38,10 +40,10 @@
                             <thead class="thead-dark">
                             <tr class="table-head">
                                 <th scope="col">
-                                    Рецепт <span class="sorting"><img src="img/sorting.png" alt="sort"></span>
+                                    Рецепт <span class="sorting"><img src="{{ asset('img/sorting.png') }}" alt="sort"></span>
                                 </th>
                                 <th scope="col">
-                                    Описание<span class="sorting"><img src="img/sorting.png" alt="sort"></span>
+                                    Описание<span class="sorting"><img src="{{ asset('img/sorting.png') }}" alt="sort"></span>
                                 </th>
                                 <th scope="col">Действия</th>
                             </tr>
@@ -52,18 +54,18 @@
                                 <td>Шарлотка</td>
                                 <td>Вкусняшка</td>
                                 <td class="text-center">
-                                    <img src="img/eye.png" alt="show">
-                                    <img src="img/edit.png" alt="edit">
-                                    <img src="img/delete.png" alt="delete">
+                                    <img src="{{ asset('img/show.png') }}" alt="show">
+                                    <img src="{{ asset('img/edit.png') }}" alt="edit">
+                                    <img src="{{ asset('img/delete.png') }}" alt="delete">
                                 </td>
                             </tr>
                             <tr>
                                 <td>Борщ</td>
                                 <td>На каждый день</td>
                                 <td class="text-center">
-                                    <img src="img/eye.png" alt="show">
-                                    <img src="img/edit.png" alt="edit">
-                                    <img src="img/delete.png" alt="delete">
+                                    <img src="{{ asset('img/show.png') }}" alt="show">
+                                    <img src="{{ asset('img/edit.png') }}" alt="edit">
+                                    <img src="{{ asset('img/delete.png') }}" alt="delete">
                                 </td>
                             </tr>
                             </tbody>

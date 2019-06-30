@@ -14,11 +14,17 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
+mix.scripts([
+    'node_modules/select2/dist/js/select2.full.js',
+    'resources/js/create.js'
+], 'public/js/bundle.js');
+
 mix.styles([
     'resources/css/404.css',
 ], 'public/css/error.css');
 
 mix.styles([
+    'node_modules/select2/dist/css/select2.min.css',
     'resources/css/welcome.css',
 ], 'public/css/welcome.css');
 

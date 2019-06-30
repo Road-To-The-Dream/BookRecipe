@@ -158,3 +158,11 @@ hr {
     color: white;
     transform: translateY(-7px);
 }
+
+.content {
+    text-align: left;
+}
+
+#delete {
+    cursor: pointer;
+}
