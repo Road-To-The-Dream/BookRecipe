@@ -1,3 +1,7 @@
+<h3>
+PHP: 7.3<br>
+Laravel: 5.8
+</h3>
 <h1>Book recipe</h1>
 <h5>For start project</h5>
 <ul>
