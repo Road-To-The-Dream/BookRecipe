@@ -7,8 +7,7 @@
             <div class="col-3 mt-3">
                 <div class="row">
                     <div class="col menu">
-                        <a href="/home"><img class="mr-3" src="{{ asset('img/ingredients.png') }}"
-                                                            alt="">Мои рецепты</a>
+                        <a href="/home"><img class="mr-3" src="{{ asset('img/ingredients.png') }}" alt="">Мои рецепты</a>
                     </div>
                 </div>
                 <hr>

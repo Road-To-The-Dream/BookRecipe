@@ -1,3 +1,24 @@
+$(document).ready(function () {
+    $(document).on('click', '#create-ingredient', function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: 'ingredient/',
+            type: 'post',
+            data: {ingredientName: $('#ingredientName').val()},
+            success: function (response) {
+
+            },
+            error: function (response) {
+
+            }
+        })
+    });
+});
+
 function create() {
     $.ajax({
         url: 'recipe/create',
