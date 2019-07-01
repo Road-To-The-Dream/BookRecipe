@@ -10,13 +10,11 @@ use Illuminate\Http\Request;
 class IngredientController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function index()
     {
-        //
+        return Ingredient::pluck('name', 'id')->toArray();
     }
 
     /**
