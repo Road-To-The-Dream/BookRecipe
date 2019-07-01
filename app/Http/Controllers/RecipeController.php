@@ -3,24 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class RecipeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        //
+        return view('home', [
+            'recipes' => Recipe::all()
+        ]);
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      */
-    public function create() ///photos/create
+    public function create(): View ///photos/create
     {
         return view('recipe.create', [
             'ingredients' => Ingredient::pluck('name', 'id')->toArray()
