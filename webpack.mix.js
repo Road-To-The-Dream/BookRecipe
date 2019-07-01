@@ -16,7 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
 
 mix.scripts([
     'node_modules/select2/dist/js/select2.full.js',
-    'resources/js/create.js',
+    'resources/js/recipe.js',
     'resources/js/notify.min.js'
 ], 'public/js/bundle.js');
 

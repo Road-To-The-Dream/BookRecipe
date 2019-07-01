@@ -29,7 +29,7 @@
                         Мои рецепты
                     </div>
                     <div class="col text-right">
-                        <a id="add" href="javascript:create();">Добавить рецепт</a>
+                        <a id="add" href="javascript:createRecipe();">Добавить рецепт</a>
                     </div>
                 </div>
 

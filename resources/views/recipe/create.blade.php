@@ -77,7 +77,7 @@
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ingredientModal">Создать новый ингредиент</button>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal ingredient -->
         <div class="modal fade" id="ingredientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -94,11 +94,8 @@
                             <div class="col-md-7">
                                 <input id="ingredientName" type="text" class="form-control" name="ingredientName"
                                        value="{{ old('name') }}" required placeholder="Название ингредиента" autofocus>
+                                <div id="ingredient-error" class="text-danger"></div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col error text-danger">dwqqw</div>
                         </div>
                     </div>
                     <div class="modal-footer">

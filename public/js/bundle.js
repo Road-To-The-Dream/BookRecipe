@@ -6598,26 +6598,11 @@ S2.define('jquery.select2',[
 
 $(document).ready(function () {
     $(document).on('click', '#create-ingredient', function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: 'ingredient/',
-            type: 'post',
-            data: {ingredientName: $('#ingredientName').val()},
-            success: function (response) {
-
-            },
-            error: function (response) {
-
-            }
-        })
+        createIngredient();
     });
 });
 
-function create() {
+function createRecipe() {
     $.ajax({
         url: 'recipe/create',
         type: 'get',
@@ -6639,7 +6624,34 @@ function create() {
             });
         },
         error: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        }
+    })
+}
 
+function createIngredient() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: 'ingredient/',
+        type: 'post',
+        data: {ingredientName: $('#ingredientName').val()},
+        success: function (response) {
+            $('#ingredientModal').modal('toggle');
+            $.notify(
+                "Ингредиент успешно добавлен !", {
+                    className: 'success',
+                    globalPosition: 'bottom left'
+                }
+            );
+        },
+        error: function (response) {
+            $('#ingredient-error').empty();
+            $('#ingredient-error').append(response['responseJSON']['errors']['ingredientName'][0]);
         }
     })
 }
