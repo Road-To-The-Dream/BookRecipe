@@ -1,10 +1,12 @@
-<form>
+<form id="form-create-recipe">
     <!-- Block name, description -->
     <div class="row mb-3">
         <div class="col my-recipe">
             Добавление рецепта
         </div>
     </div>
+
+    <div id="recipe-error" class="alert alert-danger" role="alert"></div>
 
     <div class="row">
         <div class="col">
@@ -21,8 +23,8 @@
                 <label for="description" class="col-2 col-form-label">Описание</label>
 
                 <div class="col">
-                                    <textarea id="description" class="form-control" name="description" rows="6"
-                                              required placeholder="Описание"></textarea>
+                    <textarea id="description" class="form-control" name="description" rows="6" required
+                              placeholder="Описание"></textarea>
                 </div>
             </div>
         </div>
@@ -37,8 +39,8 @@
                 <div class="form-group">
                     <label for="ingredient-1" class="col-2 col-form-label pl-0 mb-3">Ингредиент</label>
 
-                    <select id="ingredient-1" class="form-control" data-id="1">
-                        <option value="" disabled selected></option>
+                    <select id="ingredient-1" name="ingredient-1" class="form-control" data-id="1">
+                        <option value="" selected></option>
                         @foreach($ingredients as $key => $ingredient)
                             <option value="{{ $key }}">{{ $ingredient }}</option>
                         @endforeach
@@ -48,10 +50,10 @@
 
             <div class="col-3">
                 <div class="form-group">
-                    <label for="amount" class="col-form-label pl-0 mb-2">Количество</label>
+                    <label for="amount-1" class="col-form-label pl-0 mb-2">Количество</label>
 
                     <div class="col pl-0">
-                        <input id="amount" type="text" class="form-control" name="amount" required autofocus>
+                        <input id="amount-1" type="text" class="form-control" name="amount[]" required autofocus>
                     </div>
                 </div>
             </div>
@@ -97,8 +99,8 @@
                             <label for="name" class="col-3 col-form-label">Название</label>
 
                             <div class="col-md-7">
-                                <input id="ingredientName" type="text" class="form-control" name="ingredientName"
-                                       required placeholder="Название ингредиента" autofocus>
+                                <input id="ingredientName" type="text" class="form-control" required
+                                       placeholder="Название ингредиента" autofocus>
                                 <div id="ingredient-error" class="text-danger"></div>
                             </div>
                         </div>
@@ -116,7 +118,7 @@
 
     <div class="row mb-3">
         <div class="col text-right">
-            <a id="add" href="">Сохранить рецепт</a>
+            <a id="create-recipe" href="#">Сохранить рецепт</a>
         </div>
     </div>
 </form>

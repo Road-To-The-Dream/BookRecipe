@@ -16,18 +16,22 @@ $(document).ready(function () {
         $('.ingredient-block-' + $(this).data("id")).remove();
     });
 
-    $(document).on('click', '#destroy', function (e) {
-        e.preventDefault(); // does not go through with the link.
-        let $this = $(this);
-        destroyRecipe(e, $this);
+    $(document).on('click', '#destroy', function (event) {
+        event.preventDefault();
+        destroyRecipe($(this));
     });
 
     setTimeout(function () {
-        $('#delete-message').fadeOut( "slow" );
+        $('#delete-message').fadeOut("slow");
     }, 2000);
+
+    $(document).on('click', '#create-recipe', function (event) {
+        event.preventDefault();
+        createRecipe();
+    });
 });
 
-function createRecipe() {
+function formCreateRecipe() {
     $.ajax({
         url: 'recipe/create',
         type: 'get',
@@ -62,7 +66,7 @@ function createIngredient() {
         url: '/ingredient',
         type: 'post',
         data: {ingredientName: $('#ingredientName').val()},
-        success: function (response) {
+        success: function () {
             $('#ingredientModal').modal('toggle');
             $.notify(
                 "Ингредиент успешно добавлен !", {
@@ -90,18 +94,18 @@ function getIngredients(selectId) {
         url: '/ingredient',
         type: 'get',
         success: function (response) {
-            setIngredients(response, selectId);
+            appendIngredients(response, selectId);
         },
         error: function (response) {
         }
     });
 }
 
-function setIngredients(data, selectId) {
+function appendIngredients(data, selectId) {
     $('#form-ingredient').append('<div class="row ingredient-block-' + selectId + '">\n' +
         '            <div class="col-5">\n' +
         '                <div class="form-group mt-2">\n' +
-        '                    <select id="ingredient-' + selectId + '" class="form-control" data-id="' + selectId + '">\n' +
+        '                    <select id="ingredient-' + selectId + '" name="ingredient-' + selectId + '" class="form-control" data-id="' + selectId + '">\n' +
         '                        <option value="" disabled selected></option>\n' +
         '                    </select>\n' +
         '                </div>\n' +
@@ -110,7 +114,7 @@ function setIngredients(data, selectId) {
         '            <div class="col-3">\n' +
         '                <div class="form-group">\n' +
         '                    <div class="col pl-0">\n' +
-        '                        <input id="amount" type="text" class="form-control" name="amount" required autofocus>\n' +
+        '                        <input id="amount' + selectId + '" type="text" class="form-control" name="amount[]" required autofocus>\n' +
         '                    </div>\n' +
         '                </div>\n' +
         '            </div>\n' +
@@ -134,9 +138,7 @@ function setIngredients(data, selectId) {
     initializeList(selectId);
 }
 
-function destroyRecipe(e, $this) {
-    e.preventDefault(); // does not go through with the link.
-
+function destroyRecipe(link) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -144,9 +146,42 @@ function destroyRecipe(e, $this) {
     });
 
     $.post({
-        type: $this.data('method'),
-        url: $this.attr('href')
+        type: link.data('method'),
+        url: link.attr('href')
     }).done(function () {
         location.reload();
     });
+}
+
+function createRecipe() {
+    let data = new FormData(document.getElementById("form-create-recipe"));
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/recipe',
+        type: 'post',
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function () {
+            $.notify(
+                "Рецепт успешно добавлен !", {
+                    className: 'success',
+                    globalPosition: 'bottom left'
+                }
+            );
+        },
+        error: function (response) {
+            $('#recipe-error').empty();
+
+            $.each( response['responseJSON']['errors'], function( key, value ) {
+                $('#recipe-error').append(key + ": " + value + "</br>");
+            });
+        }
+    })
 }

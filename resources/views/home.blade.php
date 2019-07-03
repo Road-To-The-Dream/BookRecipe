@@ -35,7 +35,7 @@
                         Мои рецепты
                     </div>
                     <div class="col text-right">
-                        <a id="add" href="javascript:createRecipe();">Добавить рецепт</a>
+                        <a id="add-recipe" href="javascript:formCreateRecipe();">Добавить рецепт</a>
                     </div>
                 </div>
 
