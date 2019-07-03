@@ -6773,9 +6773,14 @@ function createRecipe() {
                     globalPosition: 'bottom left'
                 }
             );
+
+            setTimeout(function () {
+                window.location.href = "/recipe";
+            }, 2000);
         },
         error: function (response) {
             $('#recipe-error').empty();
+            $('#recipe-error').css('display', 'block');
 
             $.each( response['responseJSON']['errors'], function( key, value ) {
                 $('#recipe-error').append(key + ": " + value + "</br>");
