@@ -15,6 +15,16 @@ $(document).ready(function () {
     $(document).on('click', '#delete-ingredient', function () {
         $('.ingredient-block-' + $(this).data("id")).remove();
     });
+
+    $(document).on('click', '#destroy', function (e) {
+        e.preventDefault(); // does not go through with the link.
+        let $this = $(this);
+        destroyRecipe(e, $this);
+    });
+
+    setTimeout(function () {
+        $('#delete-message').fadeOut( "slow" );
+    }, 2000);
 });
 
 function createRecipe() {
@@ -122,4 +132,21 @@ function setIngredients(data, selectId) {
     }
 
     initializeList(selectId);
+}
+
+function destroyRecipe(e, $this) {
+    e.preventDefault(); // does not go through with the link.
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.post({
+        type: $this.data('method'),
+        url: $this.attr('href')
+    }).done(function () {
+        location.reload();
+    });
 }

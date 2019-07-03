@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
 
+        @if($flash = session('message'))
+            <div id="delete-message" class="alert alert-success" role="alert">
+                {{ $flash }}
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-3 mt-3">
                 <div class="row">
@@ -57,9 +63,13 @@
                                         <td>{{ $recipe->name }}</td>
                                         <td>{{ $recipe->description }}</td>
                                         <td class="text-center">
-                                            <img src="{{ asset('img/show.png') }}" alt="show">
-                                            <img src="{{ asset('img/edit.png') }}" alt="edit">
-                                            <img src="{{ asset('img/delete.png') }}" alt="delete">
+                                            <a id="show" href="recipe/{{ $recipe->id }}"><img
+                                                        src="{{ asset('img/show.png') }}" alt="show"></a>
+                                            <a id="edit" href="recipe/{{ $recipe->id }}/edit"><img
+                                                        src="{{ asset('img/edit.png') }}" alt="edit"></a>
+                                            <a id="destroy" href="{{ route('recipe.destroy', $recipe->id) }}"
+                                               data-method="delete"><img src="{{ asset('img/delete.png') }}"
+                                                                         alt="delete"></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -69,7 +79,7 @@
                         @else
                             <div class="row">
                                 <div class="col text-center">
-                                    <p class="alert alert-danger">Comments not found</p>
+                                    <p class="alert alert-danger">Recipes not found</p>
                                 </div>
                             </div>
                         @endif

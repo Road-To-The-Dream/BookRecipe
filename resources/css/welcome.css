@@ -86,12 +86,8 @@ html, body {
     border-color: #454d55;
 }
 
-tr > td > img:nth-child(1), tr > td > img:nth-child(2) {
+tr > td > a:nth-child(1), tr > td > a:nth-child(2) {
     margin-right: 8px;
-}
-
-tr > td > img:hover {
-    cursor: pointer;
 }
 
 .menu > a {
@@ -165,4 +161,11 @@ hr {
 
 #delete, #delete-ingredient {
     cursor: pointer;
+}
+
+#delete-message {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
 }

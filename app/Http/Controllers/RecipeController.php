@@ -75,13 +75,20 @@ class RecipeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
      */
-    public function destroy($id) //	/photos/{photo}
+    public function destroy($id)
     {
-        //
+        $recipe = Recipe::find($id);
+
+        if ($recipe) {
+            $destroy = Recipe::destroy($id);
+        }
+
+        if ($destroy) {
+            session()->flash('message', 'Рецепт успешно удалён, success');
+        } else {
+            session()->flash('message', 'Рецепт не удалён, error');
+        }
     }
 }
