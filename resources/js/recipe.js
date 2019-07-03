@@ -184,7 +184,7 @@ function createRecipe() {
             $('#recipe-error').empty();
             $('#recipe-error').css('display', 'block');
 
-            $.each( response['responseJSON']['errors'], function( key, value ) {
+            $.each(response['responseJSON']['errors'], function (key, value) {
                 $('#recipe-error').append(key + ": " + value + "</br>");
             });
         }
