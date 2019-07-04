@@ -170,6 +170,27 @@ hr {
     z-index: 10;
 }
 
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+td {
+    word-wrap: break-word;
+}
+
 #recipe-error {
     display: none;
+}
+
+#recipe-name {
+    width: 20%;
+}
+
+#recipe-description {
+    width: 60%;
+}
+
+#recipe-action {
+    width: 20%;
 }

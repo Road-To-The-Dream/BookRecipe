@@ -46,15 +46,17 @@
                             <table class="table table-bordered table-striped">
                                 <thead class="thead-dark">
                                 <tr class="table-head">
-                                    <th scope="col">
-                                        Рецепт <span class="sorting"><img src="{{ asset('img/sorting.png') }}"
-                                                                          alt="sort"></span>
+                                    <th id="recipe-name" scope="col">
+                                        Рецепт
+                                        <span class="sorting"><img src="{{ asset('img/sorting.png') }}"
+                                                                   alt="sort"></span>
                                     </th>
-                                    <th scope="col">
-                                        Описание<span class="sorting"><img src="{{ asset('img/sorting.png') }}"
-                                                                           alt="sort"></span>
+                                    <th id="recipe-description" scope="col">
+                                        Описание
+                                        <span class="sorting"><img src="{{ asset('img/sorting.png') }}"
+                                                                   alt="sort"></span>
                                     </th>
-                                    <th scope="col">Действия</th>
+                                    <th id="recipe-action" scope="col">Действия</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -62,14 +64,18 @@
                                     <tr>
                                         <td>{{ $recipe->name }}</td>
                                         <td>{{ $recipe->description }}</td>
-                                        <td class="text-center">
-                                            <a id="show" href="recipe/{{ $recipe->id }}"><img
-                                                        src="{{ asset('img/show.png') }}" alt="show"></a>
-                                            <a id="edit" href="recipe/{{ $recipe->id }}/edit"><img
-                                                        src="{{ asset('img/edit.png') }}" alt="edit"></a>
+                                        <td class="text-center" style="padding: 10px 0">
+                                            <a id="show" href="{{ route('recipe.show', $recipe->id) }}"
+                                               data-method="get">
+                                                <img src="{{ asset('img/show.png') }}" alt="show">
+                                            </a>
+                                            <a id="edit" href="recipe/{{ $recipe->id }}/edit">
+                                                <img src="{{ asset('img/edit.png') }}" alt="edit">
+                                            </a>
                                             <a id="destroy" href="{{ route('recipe.destroy', $recipe->id) }}"
-                                               data-method="delete"><img src="{{ asset('img/delete.png') }}"
-                                                                         alt="delete"></a>
+                                               data-method="delete">
+                                                <img src="{{ asset('img/delete.png') }}" alt="delete">
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

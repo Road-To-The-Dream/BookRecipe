@@ -55,14 +55,17 @@ class RecipeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|View
      */
-    public function show($id) ///photos/{photo}
+    public function show($id)
     {
-        //
+        $recipe = Recipe::find($id);
+
+        return view('recipe.show', [
+            'recipe' => $recipe,
+            'ingredients' => $recipe->ingredients()->get()
+        ]);
     }
 
     /**

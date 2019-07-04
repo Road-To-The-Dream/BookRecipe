@@ -16,6 +16,11 @@ $(document).ready(function () {
         $('.ingredient-block-' + $(this).data("id")).remove();
     });
 
+    $(document).on('click', '#show', function (event) {
+        event.preventDefault();
+        showRecipe($(this));
+    });
+
     $(document).on('click', '#destroy', function (event) {
         event.preventDefault();
         destroyRecipe($(this));
@@ -187,6 +192,35 @@ function createRecipe() {
             $.each(response['responseJSON']['errors'], function (key, value) {
                 $('#recipe-error').append(key + ": " + value + "</br>");
             });
+        }
+    })
+}
+
+function showRecipe(link) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: link.attr('href'),
+        type: link.data('method'),
+        beforeSend: function () {
+            $('.content').empty();
+            $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +
+                '                            <div class="spinner-border" role="status">\n' +
+                '                            </div>\n' +
+                '                            <p class="mt-1 ml-3">Загрузка . . .</p>\n' +
+                '                        </div>');
+        },
+        success: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        },
+        error: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
         }
     })
 }
