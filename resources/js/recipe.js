@@ -21,9 +21,14 @@ $(document).ready(function () {
         showRecipe($(this));
     });
 
-    $(document).on('click', '#destroy', function (event) {
+    $(document).on('click', '#destroy-recipe', function (event) {
         event.preventDefault();
         destroyRecipe($(this));
+    });
+
+    $(document).on('click', '#update-ingredient', function (event) {
+        event.preventDefault();
+        updateIngredient($(this));
     });
 
     setTimeout(function () {
@@ -76,7 +81,7 @@ function createIngredient() {
             $.notify(
                 "Ингредиент успешно добавлен !", {
                     className: 'success',
-                    globalPosition: 'bottom left'
+                    globalPosition: 'bottom right'
                 }
             );
         },
@@ -177,7 +182,7 @@ function createRecipe() {
             $.notify(
                 "Рецепт успешно добавлен !", {
                     className: 'success',
-                    globalPosition: 'bottom left'
+                    globalPosition: 'bottom right'
                 }
             );
 
@@ -221,6 +226,39 @@ function showRecipe(link) {
         error: function (response) {
             $('.content').empty();
             $('.content').append(response);
+        }
+    })
+}
+
+function updateIngredient(link) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: link.attr('href'),
+        type: 'patch',
+        data: {
+            recipeId: link.attr('data-recipeId'),
+            ingredientAmount: $('#ingredientAmount-' + link.attr('data-ingredientId')).val()
+        },
+        success: function () {
+            $.notify(
+                "Ингредиент успешно обновлён !", {
+                    className: 'success',
+                    globalPosition: 'bottom right'
+                }
+            );
+        },
+        error: function (response) {
+            $.notify(
+                "Ошибка при обновлении !", {
+                    className: 'error',
+                    globalPosition: 'bottom right'
+                }
+            );
         }
     })
 }

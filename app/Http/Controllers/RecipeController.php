@@ -40,7 +40,7 @@ class RecipeController extends Controller
     public function store(RecipeRequest $request, Recipes $recipeService)
     {
         if ($request->ajax()) {
-            $input = Utility::stripXSS([
+            $input = Utility::cleanField([
                 $request->get('recipeName'),
                 $request->get('description')
             ]);
@@ -96,16 +96,11 @@ class RecipeController extends Controller
      */
     public function destroy($id)
     {
-        $recipe = Recipe::find($id);
+        if (Recipe::find($id) && Recipe::destroy($id)) {
+            session()->flash('message-destroy-recipe', 'Рецепт успешно удалён, success');
 
-        if ($recipe) {
-            $destroy = Recipe::destroy($id);
+            return;
         }
-
-        if ($destroy) {
-            session()->flash('message', 'Рецепт успешно удалён, success');
-        } else {
-            session()->flash('message', 'Рецепт не удалён, error');
-        }
+        session()->flash('message-destroy-recipe', 'Рецепт не удалён, error');
     }
 }

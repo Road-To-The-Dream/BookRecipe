@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 
-        @if($flash = session('message'))
+        @if($flash = session('message-destroy-recipe'))
             <div id="delete-message" class="alert alert-success" role="alert">
                 {{ $flash }}
             </div>
@@ -72,7 +72,7 @@
                                             <a id="edit" href="recipe/{{ $recipe->id }}/edit">
                                                 <img src="{{ asset('img/edit.png') }}" alt="edit">
                                             </a>
-                                            <a id="destroy" href="{{ route('recipe.destroy', $recipe->id) }}"
+                                            <a id="destroy-recipe" href="{{ route('recipe.destroy', $recipe->id) }}"
                                                data-method="delete">
                                                 <img src="{{ asset('img/delete.png') }}" alt="delete">
                                             </a>

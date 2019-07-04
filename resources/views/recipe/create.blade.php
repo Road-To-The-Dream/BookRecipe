@@ -78,8 +78,7 @@
         </div>
         <div class="col-4 text-right">
             <button type="button" id="create-ingredient" class="btn btn-success" data-toggle="modal"
-                    data-target="#ingredientModal">Создать
-                новый ингредиент
+                    data-target="#ingredientModal">Создать новый ингредиент
             </button>
         </div>
 

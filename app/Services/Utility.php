@@ -9,13 +9,17 @@ namespace App\Services;
 class Utility
 {
     /**
-     * @param $items
+     * @param array $fieldsValue
      * @return array
      */
-    public static function stripXSS($items): array
+    public static function cleanField($fieldsValue = []): array
     {
         return array_map(function ($item) {
-            return strip_tags($item, '<a><code><i><strong>');
-        }, $items);
+            $fieldValue = trim($item);
+            $fieldValue = stripslashes($fieldValue);
+            $fieldValue = strip_tags($fieldValue);
+
+            return htmlspecialchars($fieldValue);
+        }, $fieldsValue);
     }
 }

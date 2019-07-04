@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IngredientRequest;
 use App\Models\Ingredient;
+use App\Models\Recipe;
 use App\Services\Utility;
 use Illuminate\Http\Request;
 
@@ -34,7 +35,7 @@ class IngredientController extends Controller
     public function store(IngredientRequest $request)
     {
         if ($request->ajax()) {
-            $input = Utility::stripXSS($request->all());
+            $input = Utility::cleanField($request->all());
 
             Ingredient::create(['name' => $input['ingredientName']]);
         } else {
@@ -45,7 +46,7 @@ class IngredientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -56,7 +57,7 @@ class IngredientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -65,21 +66,26 @@ class IngredientController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $input = Utility::cleanField([$request->get('ingredientAmount')]);
+
+            $recipeId = Recipe::find($request->get('recipeId'));
+            $recipeId->ingredients()->where('ingredient_id', $id)->update(['amount' => $input[0]]);
+        } else {
+            return response()->view('errors.403', [], 403);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

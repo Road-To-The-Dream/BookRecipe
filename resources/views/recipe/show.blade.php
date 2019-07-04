@@ -29,9 +29,16 @@
                 {{ $ingredient->name }}
             </div>
             <div class="col text-right">
-                <input type="text" value="{{ $ingredient->pivot->amount }}">
-                <a id="edit" href="recipe/{{ $recipe->id }}/edit"><img
-                            src="{{ asset('img/edit.png') }}" alt="edit"></a>
+                <input id="ingredientAmount-{{ $ingredient->pivot->ingredient_id }}" type="text"
+                       value="{{ $ingredient->pivot->amount }}">
+                <a id="update-ingredient" href="{{ route('ingredient.update', $ingredient->pivot->ingredient_id) }}"
+                   data-recipeId="{{ $recipe->id }}" data-ingredientId="{{ $ingredient->pivot->ingredient_id }}">
+                    <img src="{{ asset('img/edit.png') }}" alt="edit">
+                </a>
+                <a id="destroy-ingredientdw" href="{{ route('ingredient.destroy', $ingredient->pivot->ingredient_id)}}"
+                   data-method="delete">
+                    <img src="{{ asset('img/delete.png') }}" alt="delete">
+                </a>
             </div>
         </div>
         <hr>
