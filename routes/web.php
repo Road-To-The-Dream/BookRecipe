@@ -20,3 +20,5 @@ Auth::routes();
 Route::resource('recipe', 'RecipeController');
 
 Route::resource('ingredient', 'IngredientController');
+
+Route::patch('ingredient/update-amount/{ingredientId}', 'IngredientController@updateAmount')->name('ingredient.updateAmount');

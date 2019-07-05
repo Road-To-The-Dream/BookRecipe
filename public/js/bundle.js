@@ -6624,9 +6624,9 @@ $(document).ready(function () {
         destroyRecipe($(this));
     });
 
-    $(document).on('click', '#update-ingredient', function (event) {
+    $(document).on('click', '#update-ingredient-amount', function (event) {
         event.preventDefault();
-        updateIngredient($(this));
+        updateIngredientAmount($(this));
     });
 
     setTimeout(function () {
@@ -6828,7 +6828,7 @@ function showRecipe(link) {
     })
 }
 
-function updateIngredient(link) {
+function updateIngredientAmount(link) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -6843,6 +6843,7 @@ function updateIngredient(link) {
             ingredientAmount: $('#ingredientAmount-' + link.attr('data-ingredientId')).val()
         },
         success: function () {
+            $('#ingredient-error').css('display', 'none');
             $.notify(
                 "Ингредиент успешно обновлён !", {
                     className: 'success',
@@ -6857,6 +6858,13 @@ function updateIngredient(link) {
                     globalPosition: 'bottom right'
                 }
             );
+
+            $('#ingredient-error').empty();
+            $('#ingredient-error').css('display', 'block');
+
+            $.each(response['responseJSON']['errors'], function (key, value) {
+                $('#ingredient-error').append(value + "</br>");
+            });
         }
     })
 }

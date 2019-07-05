@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class IngredientRequest extends FormRequest
+class IngredientUpdateAmountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,14 @@ class IngredientRequest extends FormRequest
     public function rules()
     {
         return [
-            'ingredientName' => 'required|string'
+            'ingredientAmount' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'ingredientName.required' => 'Field ingredient name is empty',
-            'ingredientName.string' => 'Field ingredient name is not a string'
+            'ingredientAmount.required' => 'Field amount is empty'
         ];
     }
 }

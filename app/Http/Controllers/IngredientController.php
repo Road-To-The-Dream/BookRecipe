@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IngredientRequest;
+use App\Http\Requests\IngredientCreateRequest;
+use App\Http\Requests\IngredientUpdateAmountRequest;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Services\Utility;
@@ -29,10 +30,10 @@ class IngredientController extends Controller
     }
 
     /**
-     * @param IngredientRequest $request
+     * @param IngredientCreateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngredientRequest $request)
+    public function store(IngredientCreateRequest $request)
     {
         if ($request->ajax()) {
             $input = Utility::cleanField($request->all());
@@ -72,14 +73,7 @@ class IngredientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->ajax()) {
-            $input = Utility::cleanField([$request->get('ingredientAmount')]);
 
-            $recipeId = Recipe::find($request->get('recipeId'));
-            $recipeId->ingredients()->where('ingredient_id', $id)->update(['amount' => $input[0]]);
-        } else {
-            return response()->view('errors.403', [], 403);
-        }
     }
 
     /**
@@ -91,5 +85,22 @@ class IngredientController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param IngredientUpdateAmountRequest $request
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAmount(IngredientUpdateAmountRequest $request, $id)
+    {
+        if ($request->ajax()) {
+            $input = Utility::cleanField([$request->get('ingredientAmount')]);
+
+            $recipeId = Recipe::find($request->get('recipeId'));
+            $recipeId->ingredients()->where('ingredient_id', $id)->update(['amount' => $input[0]]);
+        } else {
+            return response()->view('errors.403', [], 403);
+        }
     }
 }
