@@ -4,7 +4,7 @@
     <div class="container">
 
         @if($flash = session('message-destroy-recipe'))
-            <div id="delete-message" class="alert alert-success" role="alert">
+            <div id="message-destroy-recipe" class="alert alert-success" role="alert">
                 {{ $flash }}
             </div>
         @endif
@@ -65,14 +65,14 @@
                                         <td>{{ $recipe->name }}</td>
                                         <td>{{ $recipe->description }}</td>
                                         <td class="text-center" style="padding: 10px 0">
-                                            <a id="show" href="{{ route('recipe.show', $recipe->id) }}"
+                                            <a id="action-show-recipe" href="{{ route('recipe.show', $recipe->id) }}"
                                                data-method="get">
                                                 <img src="{{ asset('img/show.png') }}" alt="show">
                                             </a>
-                                            <a id="edit" href="recipe/{{ $recipe->id }}/edit">
+                                            <a id="action-edit-recipe" href="recipe/{{ $recipe->id }}/edit">
                                                 <img src="{{ asset('img/edit.png') }}" alt="edit">
                                             </a>
-                                            <a id="destroy-recipe" href="{{ route('recipe.destroy', $recipe->id) }}"
+                                            <a id="action-destroy-recipe" href="{{ route('recipe.destroy', $recipe->id) }}"
                                                data-method="delete">
                                                 <img src="{{ asset('img/delete.png') }}" alt="delete">
                                             </a>

@@ -6605,21 +6605,21 @@ $(document).ready(function () {
         $('#ingredientName').val('');
     });
 
-    $(document).on('click', '#add-ingredient', function () {
+    $(document).on('click', '#add-select-ingredients', function () {
         let selectId = $("#form-ingredient select").eq(-1).data('id');
-        getIngredients(selectId + 1);
+        getIngredientsForSelect(selectId + 1);
     });
 
-    $(document).on('click', '#delete-ingredient', function () {
+    $(document).on('click', '#action-destroy-ingredient', function () {
         $('.ingredient-block-' + $(this).data("id")).remove();
     });
 
-    $(document).on('click', '#show', function (event) {
+    $(document).on('click', '#action-show-recipe', function (event) {
         event.preventDefault();
         showRecipe($(this));
     });
 
-    $(document).on('click', '#destroy-recipe', function (event) {
+    $(document).on('click', '#action-destroy-recipe', function (event) {
         event.preventDefault();
         destroyRecipe($(this));
     });
@@ -6630,7 +6630,7 @@ $(document).ready(function () {
     });
 
     setTimeout(function () {
-        $('#delete-message').fadeOut("slow");
+        $('#message-destroy-recipe').fadeOut("slow");
     }, 2000);
 
     $(document).on('click', '#create-recipe', function (event) {
@@ -6655,7 +6655,7 @@ function formCreateRecipe() {
             $('.content').empty();
             $('.content').append(response);
 
-            initializeList(1);
+            initializeSelectIngredients(1);
         },
         error: function (response) {
             $('.content').empty();
@@ -6690,14 +6690,14 @@ function createIngredient() {
     })
 }
 
-function initializeList(id) {
+function initializeSelectIngredients(id) {
     $('#ingredient-' + id).select2({
         placeholder: "Выберите ингредиент",
         allowClear: true
     });
 }
 
-function getIngredients(selectId) {
+function getIngredientsForSelect(selectId) {
     return $.ajax({
         url: '/ingredient',
         type: 'get',
@@ -6730,7 +6730,7 @@ function appendIngredients(data, selectId) {
         '            <div class="col-2 text-center">\n' +
         '                <div class="form-group">\n' +
         '                    <div class="col">\n' +
-        '                        <img id="delete-ingredient" src="img/delete.png" data-id="' + selectId + '" alt="delete">\n' +
+        '                        <img id="action-destroy-ingredient" src="img/delete.png" data-id="' + selectId + '" alt="delete">\n' +
         '                    </div>\n' +
         '                </div>\n' +
         '            </div>\n' +
@@ -6743,7 +6743,7 @@ function appendIngredients(data, selectId) {
         }));
     }
 
-    initializeList(selectId);
+    initializeSelectIngredients(selectId);
 }
 
 function destroyRecipe(link) {

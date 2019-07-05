@@ -69,7 +69,7 @@
     <!-- Block add, create ingredient -->
     <div class="row mt-5">
         <div class="col-4">
-            <button type="button" id="add-ingredient" class="btn btn-success">Добавить</button>
+            <button type="button" id="add-select-ingredients" class="btn btn-success">Добавить</button>
         </div>
         <div class="col-4 text-right">
             <div class="form-group">

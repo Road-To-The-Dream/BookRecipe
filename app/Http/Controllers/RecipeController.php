@@ -97,10 +97,10 @@ class RecipeController extends Controller
     public function destroy($id)
     {
         if (Recipe::find($id) && Recipe::destroy($id)) {
-            session()->flash('message-destroy-recipe', 'Рецепт успешно удалён, success');
+            session()->flash('message-destroy-recipe', 'Рецепт успешно удалён!');
 
             return;
         }
-        session()->flash('message-destroy-recipe', 'Рецепт не удалён, error');
+        session()->flash('message-destroy-recipe', 'Рецепт не удалён!');
     }
 }

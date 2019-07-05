@@ -161,11 +161,11 @@ hr {
     text-align: left;
 }
 
-#delete, #delete-ingredient {
+#delete, #action-destroy-ingredient {
     cursor: pointer;
 }
 
-#delete-message {
+#message-destroy-recipe {
     position: absolute;
     bottom: 20px;
     right: 20px;
