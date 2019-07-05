@@ -16,7 +16,9 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        return Ingredient::pluck('name', 'id')->toArray();
+        return view('ingredient.show', [
+            'ingredients' => Ingredient::all()
+        ]);
     }
 
     /**

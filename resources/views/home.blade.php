@@ -13,13 +13,17 @@
             <div class="col-3 mt-3">
                 <div class="row">
                     <div class="col menu">
-                        <a href="/recipe"><img class="mr-3" src="{{ asset('img/ingredients.png') }}" alt="">Мои рецепты</a>
+                        <a id="show-recipes" href="{{ route('recipe.index') }}" data-method="GET">
+                            <img class="mr-3" src="{{ asset('img/ingredients.png') }}" alt="">Мои рецепты
+                        </a>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col menu">
-                        <a href=""><img class="mr-3" src="{{ asset('img/recipe.png') }}" alt="">Ингредиенты</a>
+                        <a id="show-ingredients" href="{{ route('ingredient.index') }}" data-method="GET">
+                            <img class="mr-3" src="{{ asset('img/recipe.png') }}" alt="">Ингредиенты
+                        </a>
                     </div>
                 </div>
                 <hr>
@@ -72,7 +76,8 @@
                                             <a id="action-edit-recipe" href="recipe/{{ $recipe->id }}/edit">
                                                 <img src="{{ asset('img/edit.png') }}" alt="edit">
                                             </a>
-                                            <a id="action-destroy-recipe" href="{{ route('recipe.destroy', $recipe->id) }}"
+                                            <a id="action-destroy-recipe"
+                                               href="{{ route('recipe.destroy', $recipe->id) }}"
                                                data-method="delete">
                                                 <img src="{{ asset('img/delete.png') }}" alt="delete">
                                             </a>

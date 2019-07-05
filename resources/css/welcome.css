@@ -187,7 +187,7 @@ td {
     display: none;
 }
 
-#recipe-name {
+#recipe-name, #recipe-action  {
     width: 20%;
 }
 
@@ -195,6 +195,10 @@ td {
     width: 60%;
 }
 
-#recipe-action {
-    width: 20%;
+#ingredient-name {
+    width: 70%;
+}
+
+#ingredient-action {
+    width: 30%;
 }

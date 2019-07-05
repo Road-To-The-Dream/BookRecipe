@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    $(document).on('click', '#show-ingredients', function (event) {
+        event.preventDefault();
+        showListIngredients($(this));
+    });
+
     $(document).on('click', '#save-ingredient', function () {
         createIngredient();
     });
@@ -267,6 +272,29 @@ function updateIngredientAmount(link) {
             $.each(response['responseJSON']['errors'], function (key, value) {
                 $('#ingredient-error').append(value + "</br>");
             });
+        }
+    })
+}
+
+function showListIngredients(link) {
+    $.ajax({
+        url: link.attr('href'),
+        type: link.data('method'),
+        beforeSend: function () {
+            $('.content').empty();
+            $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +
+                '                            <div class="spinner-border" role="status">\n' +
+                '                            </div>\n' +
+                '                            <p class="mt-1 ml-3">Загрузка . . .</p>\n' +
+                '                        </div>');
+        },
+        success: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        },
+        error: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
         }
     })
 }
