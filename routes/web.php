@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('recipe', 'RecipeController');
+Route::resource('recipe', 'RecipeController')->middleware('auth');
 
 Route::resource('ingredient', 'IngredientController');
 

@@ -8,6 +8,7 @@ use App\Models\Recipe;
 use App\Services\Utility;
 use App\Services\Recipes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class RecipeController extends Controller
@@ -18,7 +19,7 @@ class RecipeController extends Controller
     public function index(): View
     {
         return view('home', [
-            'recipes' => Recipe::all()
+            'recipes' => Recipe::where('user_id', Auth::id())->get()
         ]);
     }
 
