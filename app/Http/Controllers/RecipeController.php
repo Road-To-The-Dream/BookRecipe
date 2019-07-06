@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RecipeRequest;
+use App\Http\Requests\StoreRecipeRequest;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Services\Utility;
@@ -38,7 +38,7 @@ class RecipeController extends Controller
      * @param Recipes $recipeService
      * @return \Illuminate\Http\Response
      */
-    public function store(RecipeRequest $request, Recipes $recipeService)
+    public function store(StoreRecipeRequest $request, Recipes $recipeService)
     {
         if ($request->ajax()) {
             $input = Utility::cleanField([
