@@ -6599,14 +6599,14 @@ S2.define('jquery.select2',[
 $(document).ready(function () {
     $(document).on('click', '#show-ingredients', function (event) {
         event.preventDefault();
-        showListIngredients($(this));
+        showListIngredients();
     });
 
-    $(document).on('click', '#save-ingredient', function () {
-        createIngredient();
+    $(document).on('click', '#modal-ave-ingredient', function () {
+        createIngredientModal();
     });
 
-    $(document).on('click', '#create-ingredient', function () {
+    $(document).on('click', '#modal-create-ingredient', function () {
         $('#ingredientName').val('');
     });
 
@@ -6642,6 +6642,21 @@ $(document).ready(function () {
         event.preventDefault();
         createRecipe();
     });
+
+    $(document).on('click', '#add-recipe', function (event) {
+        event.preventDefault();
+        formCreateRecipe();
+    });
+
+    $(document).on('click', '#add-ingredient', function (event) {
+        event.preventDefault();
+        formCreateIngredient();
+    });
+
+    $(document).on('click', '#create-ingredient', function (event) {
+        event.preventDefault();
+        createIngredient();
+    });
 });
 
 function formCreateRecipe() {
@@ -6669,7 +6684,30 @@ function formCreateRecipe() {
     })
 }
 
-function createIngredient() {
+function formCreateIngredient() {
+    $.ajax({
+        url: 'ingredient/create',
+        type: 'get',
+        beforeSend: function () {
+            $('.content').empty();
+            $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +
+                '                            <div class="spinner-border" role="status">\n' +
+                '                            </div>\n' +
+                '                            <p class="mt-1 ml-3">Загрузка . . .</p>\n' +
+                '                        </div>');
+        },
+        success: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        },
+        error: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        }
+    })
+}
+
+function createIngredientModal() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -6689,6 +6727,34 @@ function createIngredient() {
             );
         },
         error: function (response) {
+            $('#ingredient-error').empty();
+            $('#ingredient-error').append(response['responseJSON']['errors']['ingredientName'][0]);
+        }
+    })
+}
+
+function createIngredient() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: '/ingredient',
+        type: 'post',
+        data: {ingredientName: $('#ingredientName').val()},
+        success: function () {
+            $.notify(
+                "Ингредиент успешно добавлен !", {
+                    className: 'success',
+                    globalPosition: 'bottom right'
+                }
+            );
+
+            showListIngredients();
+        },
+        error: function (response) {
+            $('#ingredient-error').css('display', 'block');
             $('#ingredient-error').empty();
             $('#ingredient-error').append(response['responseJSON']['errors']['ingredientName'][0]);
         }
@@ -6874,10 +6940,10 @@ function updateIngredientAmount(link) {
     })
 }
 
-function showListIngredients(link) {
+function showListIngredients() {
     $.ajax({
-        url: link.attr('href'),
-        type: link.data('method'),
+        url: 'ingredient',
+        type: 'get',
         beforeSend: function () {
             $('.content').empty();
             $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +

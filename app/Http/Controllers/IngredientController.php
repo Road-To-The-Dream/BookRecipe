@@ -8,6 +8,7 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Services\Utility;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class IngredientController extends Controller
 {
@@ -22,13 +23,11 @@ class IngredientController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('ingredient.create');
     }
 
     /**
