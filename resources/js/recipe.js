@@ -59,6 +59,11 @@ $(document).ready(function () {
         event.preventDefault();
         createIngredient();
     });
+
+    $(document).on('click', '#action-destroy-ingredient', function (event) {
+        event.preventDefault();
+        destroyIngredient($(this));
+    });
 });
 
 function formCreateRecipe() {
@@ -363,4 +368,23 @@ function showListIngredients() {
             $('.content').append(response);
         }
     })
+}
+
+function destroyIngredient(link) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.post({
+        type: link.data('method'),
+        url: link.attr('href')
+    }).done(function () {
+        showListIngredients();
+
+        setTimeout(function () {
+            $('#message-destroy-ingredient').fadeOut("slow");
+        }, 2000);
+    });
 }

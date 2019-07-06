@@ -1,9 +1,15 @@
+@if($flash = session('message-destroy-ingredient'))
+    <div id="message-destroy-ingredient" class="alert alert-success" role="alert">
+        {{ $flash }}
+    </div>
+@endif
+
 <div class="row mb-3">
     <div class="col my-recipe">
         Мои ингредиенты
     </div>
     <div class="col text-right">
-        <a id="add-ingredient" href="javascript:formCreateRecipe();">Добавить ингредиент</a>
+        <a id="add-ingredient" href="#">Добавить ингредиент</a>
     </div>
 </div>
 
@@ -31,7 +37,7 @@
                                 <img src="{{ asset('img/edit.png') }}" alt="edit">
                             </a>
                             <a id="action-destroy-ingredient"
-                               href="{{ route('recipe.destroy', $ingredient->id) }}"
+                               href="{{ route('ingredient.destroy', $ingredient->id) }}"
                                data-method="delete">
                                 <img src="{{ asset('img/delete.png') }}" alt="delete">
                             </a>

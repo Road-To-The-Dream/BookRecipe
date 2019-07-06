@@ -78,14 +78,16 @@ class IngredientController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
      */
     public function destroy($id)
     {
-        //
+        if (Ingredient::find($id) && Ingredient::destroy($id)) {
+            session()->flash('message-destroy-ingredient', 'Ингредиент успешно удалён!');
+
+            return;
+        }
+        session()->flash('message-destroy-ingredient', 'Ингредиент не удалён!');
     }
 
     /**
