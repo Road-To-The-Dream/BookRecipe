@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IngredientCreateRequest;
-use App\Http\Requests\IngredientUpdateAmountRequest;
+use App\Http\Requests\StoreIngredientRequest;
+use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Services\Utility;
@@ -31,10 +31,10 @@ class IngredientController extends Controller
     }
 
     /**
-     * @param IngredientCreateRequest $request
+     * @param StoreIngredientRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngredientCreateRequest $request)
+    public function store(StoreIngredientRequest $request)
     {
         if ($request->ajax()) {
             $input = Utility::cleanField($request->all());
@@ -89,11 +89,11 @@ class IngredientController extends Controller
     }
 
     /**
-     * @param IngredientUpdateAmountRequest $request
+     * @param UpdateIngredientRequest $request
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function updateAmount(IngredientUpdateAmountRequest $request, $id)
+    public function updateAmount(UpdateIngredientRequest $request, $id)
     {
         if ($request->ajax()) {
             $input = Utility::cleanField([$request->get('ingredientAmount')]);
