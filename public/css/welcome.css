@@ -9,6 +9,10 @@ html, body {
     margin: 0;
 }
 
+.bg-white {
+    background: url('/img/bg-header.jpg') repeat #fff;
+}
+
 .full-height {
     height: 100vh;
 }

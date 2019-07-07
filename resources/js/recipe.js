@@ -4,7 +4,7 @@ $(document).ready(function () {
         showListIngredients();
     });
 
-    $(document).on('click', '#modal-ave-ingredient', function () {
+    $(document).on('click', '#modal-save-ingredient', function () {
         createIngredientModal();
     });
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
         getIngredientsForSelect(selectId + 1);
     });
 
-    $(document).on('click', '#action-destroy-ingredient', function () {
+    $(document).on('click', '#action-destroy-ingredient-select', function () {
         $('.ingredient-block-' + $(this).data("id")).remove();
     });
 
@@ -177,7 +177,7 @@ function initializeSelectIngredients(id) {
 
 function getIngredientsForSelect(selectId) {
     return $.ajax({
-        url: '/ingredient',
+        url: 'all-ingredients',
         type: 'get',
         success: function (response) {
             appendIngredients(response, selectId);
@@ -189,30 +189,29 @@ function getIngredientsForSelect(selectId) {
 
 function appendIngredients(data, selectId) {
     $('#form-ingredient').append('<div class="row ingredient-block-' + selectId + '">\n' +
-        '            <div class="col-5">\n' +
-        '                <div class="form-group mt-2">\n' +
-        '                    <select id="ingredient-' + selectId + '" name="ingredient-' + selectId + '" class="form-control" data-id="' + selectId + '">\n' +
-        '                        <option value="" disabled selected></option>\n' +
-        '                    </select>\n' +
-        '                </div>\n' +
+        '    <div class="col-5">\n' +
+        '        <div class="form-group mt-2">\n' +
+        '            <select id="ingredient-' + selectId + '" name="ingredient-' + selectId + '" class="form-control"\n' +
+        '                    data-id="' + selectId + '">\n' +
+        '                <option value="" disabled selected></option>\n' +
+        '            </select>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '    <div class="col-3">\n' +
+        '        <div class="form-group">\n' +
+        '            <div class="col pl-0">\n' +
+        '                <input id="amount\' + selectId + \'" type="text" class="form-control" name="amount[]" required autofocus>\n' +
         '            </div>\n' +
-        '\n' +
-        '            <div class="col-3">\n' +
-        '                <div class="form-group">\n' +
-        '                    <div class="col pl-0">\n' +
-        '                        <input id="amount' + selectId + '" type="text" class="form-control" name="amount[]" required autofocus>\n' +
-        '                    </div>\n' +
-        '                </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '    <div class="col-2 text-center">\n' +
+        '        <div class="form-group">\n' +
+        '            <div class="col">\n' +
+        '                <img id="action-destroy-ingredient-select" src="img/delete.png" data-id="' + selectId + '" alt="delete">\n' +
         '            </div>\n' +
-        '\n' +
-        '            <div class="col-2 text-center">\n' +
-        '                <div class="form-group">\n' +
-        '                    <div class="col">\n' +
-        '                        <img id="action-destroy-ingredient" src="img/delete.png" data-id="' + selectId + '" alt="delete">\n' +
-        '                    </div>\n' +
-        '                </div>\n' +
-        '            </div>\n' +
-        '        </div>');
+        '        </div>\n' +
+        '    </div>\n' +
+        '</div>');
 
     for (let key in data) {
         $('#ingredient-' + selectId).append($('<option>', {

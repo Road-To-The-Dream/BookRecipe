@@ -106,4 +106,12 @@ class IngredientController extends Controller
             return response()->view('errors.403', [], 403);
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIngredients()
+    {
+        return Ingredient::pluck('name', 'id')->toArray();
+    }
 }
