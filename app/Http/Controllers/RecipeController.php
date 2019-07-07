@@ -34,7 +34,7 @@ class RecipeController extends Controller
     }
 
     /**
-     * @param RecipeRequest $request
+     * @param StoreRecipeRequest $request
      * @param Recipes $recipeService
      * @return \Illuminate\Http\Response
      */
@@ -75,7 +75,13 @@ class RecipeController extends Controller
      */
     public function edit($id): View
     {
+        $recipe = Recipe::find($id);
 
+        return view('recipe.create', [
+            'recipe' => $recipe,
+            'recipesIngredients' => $recipe->ingredients()->get(),
+            'ingredients' => Ingredient::pluck('name', 'id')->toArray()
+        ]);
     }
 
     /**

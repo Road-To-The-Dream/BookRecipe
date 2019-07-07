@@ -27,6 +27,7 @@
                     </div>
                 </div>
                 <hr>
+                <input type="text" id="flag-update-or-create-recipe" value="">
             </div>
 
             <div class="col-1">

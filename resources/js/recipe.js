@@ -26,6 +26,12 @@ $(document).ready(function () {
         showRecipe($(this));
     });
 
+    $(document).on('click', '#action-edit-recipe', function (event) {
+        event.preventDefault();
+        $('#flag-update-or-create-recipe').val('update');
+        editRecipe($(this));
+    });
+
     $(document).on('click', '#action-destroy-recipe', function (event) {
         event.preventDefault();
         destroyRecipe($(this));
@@ -40,13 +46,15 @@ $(document).ready(function () {
         $('#message-destroy-recipe').fadeOut("slow");
     }, 2000);
 
-    $(document).on('click', '#create-recipe', function (event) {
+    $(document).on('click', '#save-recipe', function (event) {
         event.preventDefault();
-        createRecipe();
+
+        ($('#flag-update-or-create-recipe').val() === 'create') ? saveRecipe() : updateRecipe();
     });
 
     $(document).on('click', '#add-recipe', function (event) {
         event.preventDefault();
+        $('#flag-update-or-create-recipe').val('create');
         formCreateRecipe();
     });
 
@@ -55,9 +63,9 @@ $(document).ready(function () {
         formCreateIngredient();
     });
 
-    $(document).on('click', '#create-ingredient', function (event) {
+    $(document).on('click', '#save-ingredient', function (event) {
         event.preventDefault();
-        createIngredient();
+        saveIngredient();
     });
 
     $(document).on('click', '#action-destroy-ingredient', function (event) {
@@ -140,7 +148,7 @@ function createIngredientModal() {
     })
 }
 
-function createIngredient() {
+function saveIngredient() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -238,7 +246,7 @@ function destroyRecipe(link) {
     });
 }
 
-function createRecipe() {
+function saveRecipe() {
     let data = new FormData(document.getElementById("form-create-recipe"));
 
     $.ajaxSetup({
@@ -386,4 +394,37 @@ function destroyIngredient(link) {
             $('#message-destroy-ingredient').fadeOut("slow");
         }, 2000);
     });
+}
+
+function editRecipe(link) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: link.attr('href'),
+        type: link.data('method'),
+        beforeSend: function () {
+            $('.content').empty();
+            $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +
+                '                            <div class="spinner-border" role="status">\n' +
+                '                            </div>\n' +
+                '                            <p class="mt-1 ml-3">Загрузка . . .</p>\n' +
+                '                        </div>');
+        },
+        success: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        },
+        error: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        }
+    })
+}
+
+function updateRecipe() {
+
 }

@@ -25,7 +25,7 @@
 
     <div class="row mb-3">
         <div class="col text-right">
-            <a id="create-ingredient" href="#">Сохранить ингредиент</a>
+            <a id="save-ingredient" href="#">Сохранить ингредиент</a>
         </div>
     </div>
 </form>

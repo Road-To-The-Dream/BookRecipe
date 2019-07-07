@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Requests\RecipeRequest;
+use App\Http\Requests\StoreRecipeRequest;
 
 /**
  * Class Recipes
@@ -11,10 +11,10 @@ use App\Http\Requests\RecipeRequest;
 class Recipes
 {
     /**
-     * @param RecipeRequest $request
+     * @param StoreRecipeRequest $request
      * @return array
      */
-    public function formingIngredientsArray(RecipeRequest $request): array
+    public function formingIngredientsArray(StoreRecipeRequest $request): array
     {
         $ingredientsId = [];
         for ($i = 1; $i <= $request->all(); $i++) {
@@ -29,11 +29,11 @@ class Recipes
     }
 
     /**
-     * @param RecipeRequest $request
+     * @param StoreRecipeRequest $request
      * @param $ingredients
      * @return array
      */
-    public function formingIngredientsInfoArray(RecipeRequest $request, $ingredients): array
+    public function formingIngredientsInfoArray(StoreRecipeRequest $request, $ingredients): array
     {
         $recipesIngredients = [];
         for ($i = 0; $i < count($ingredients); $i++) {

@@ -133,7 +133,7 @@ hr {
     font-weight: bold;
 }
 
-#create-recipe, #add-recipe, #add-ingredient, #create-ingredient {
+#save-recipe, #add-recipe, #add-ingredient, #save-ingredient {
     padding-left: 10px;
     padding-right: 10px;
     text-decoration: none;
@@ -154,7 +154,7 @@ hr {
     transition: .3s;
 }
 
-#create-recipe:hover, #add-recipe:hover, #add-ingredient:hover, #create-ingredient:hover {
+#save-recipe:hover, #add-recipe:hover, #add-ingredient:hover, #save-ingredient:hover {
     background: #2EE59D;
     box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
     color: white;
