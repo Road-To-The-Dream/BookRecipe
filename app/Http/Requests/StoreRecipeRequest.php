@@ -21,7 +21,7 @@ class StoreRecipeRequest extends FormRequest
     {
         return [
             'recipeName' => 'required',
-            'description' => 'required',
+            'recipeDescription' => 'required',
             'amount.*' => 'required'
         ];
     }
@@ -33,7 +33,7 @@ class StoreRecipeRequest extends FormRequest
     {
         return [
             'recipeName.required' => 'Field is empty',
-            'description.required' => 'Field is empty',
+            'recipeDescription.required' => 'Field is empty',
             'amount.*.required' => 'Field amount is empty'
         ];
     }

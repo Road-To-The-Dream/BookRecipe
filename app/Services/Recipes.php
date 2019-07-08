@@ -11,15 +11,15 @@ use App\Http\Requests\StoreRecipeRequest;
 class Recipes
 {
     /**
-     * @param StoreRecipeRequest $request
+     * @param $request
      * @return array
      */
-    public function formingIngredientsArray(StoreRecipeRequest $request): array
+    public function formingIngredientsArray($request): array
     {
         $ingredientsId = [];
-        for ($i = 1; $i <= $request->all(); $i++) {
+        for ($i = 1; $i <= count($request->request); $i++) {
             if (empty($request->get('ingredient-' . $i))) {
-                break;
+                continue;
             } else {
                 array_push($ingredientsId, (int)$request->get('ingredient-' . $i));
             }
@@ -29,11 +29,11 @@ class Recipes
     }
 
     /**
-     * @param StoreRecipeRequest $request
+     * @param $request
      * @param $ingredients
      * @return array
      */
-    public function formingIngredientsInfoArray(StoreRecipeRequest $request, $ingredients): array
+    public function formingIngredientsInfoArray($request, $ingredients): array
     {
         $recipesIngredients = [];
         for ($i = 0; $i < count($ingredients); $i++) {

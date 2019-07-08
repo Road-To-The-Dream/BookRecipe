@@ -14,7 +14,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#add-select-ingredients', function () {
         let selectId = $("#form-ingredient select").eq(-1).data('id');
-        getIngredientsForSelect(selectId + 1);
+        getIngredientsForSelect((selectId === undefined ? 1 : selectId + 1));
     });
 
     $(document).on('click', '#action-destroy-ingredient-select', function () {
@@ -255,8 +255,8 @@ function saveRecipe() {
         }
     });
     $.ajax({
-        url: '/recipe',
-        type: 'post',
+        url: $('#form-create-recipe').attr('action'),
+        method: $('#form-create-recipe').attr('method'),
         data: data,
         processData: false,
         contentType: false,
@@ -426,5 +426,40 @@ function editRecipe(link) {
 }
 
 function updateRecipe() {
+    let data = new FormData(document.getElementById("form-update-recipe"));
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: $('#form-update-recipe').attr('action'),
+        method: 'post',
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function () {
+            $.notify(
+                "Рецепт успешно обновлён !", {
+                    className: 'success',
+                    globalPosition: 'bottom right'
+                }
+            );
+
+            setTimeout(function () {
+                window.location.href = "/recipe";
+            }, 2000);
+        },
+        error: function (response) {
+            $('#recipe-error').empty();
+            $('#recipe-error').css('display', 'block');
+
+            $.each(response['responseJSON']['errors'], function (key, value) {
+                $('#recipe-error').append(key + ": " + value + "</br>");
+            });
+        }
+    })
 }

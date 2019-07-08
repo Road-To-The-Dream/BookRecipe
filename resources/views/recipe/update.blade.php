@@ -1,5 +1,7 @@
-<form id="form-create-recipe" action="recipe" method="post">
-    <!-- Block name, description -->
+<form id="form-update-recipe" action="{{ route('recipe.update', $recipe->id) }}" method="post">
+@csrf
+@method('PUT')
+<!-- Block name, description -->
     <div class="row mb-3 label-add-recipe">
         <div class="col my-recipe">
             Добавление рецепта
@@ -15,16 +17,16 @@
 
                 <div class="col-md-6">
                     <input id="name" type="text" class="form-control" name="recipeName" required
-                           placeholder="Название рецепта" autofocus>
+                           placeholder="Название рецепта" value="{{ $recipe->name }}" autofocus>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="recipeDescription" class="col-2 col-form-label">Описание</label>
+                <label for="description" class="col-2 col-form-label">Описание</label>
 
                 <div class="col">
                     <textarea id="recipeDescription" class="form-control" name="recipeDescription" rows="6" required
-                              placeholder="Описание"></textarea>
+                              placeholder="Описание">{{ $recipe->description }}</textarea>
                 </div>
             </div>
         </div>
@@ -39,12 +41,28 @@
                 <div class="form-group">
                     <label for="ingredient-1" class="col-2 col-form-label pl-0 mb-3">Ингредиент</label>
 
-                    <select id="ingredient-1" name="ingredient-1" class="form-control" data-id="1">
-                        <option value="" selected></option>
-                        @foreach($ingredients as $key => $ingredient)
-                            <option value="{{ $key }}">{{ $ingredient }}</option>
-                        @endforeach
-                    </select>
+                    @foreach ($recipesIngredients as $recipeIngredient)
+                        <div class="form-group mt-1">
+                            <select id="ingredient-{{ $recipeIngredient->pivot->ingredient_id }}"
+                                    name="ingredient-{{ $recipeIngredient->pivot->ingredient_id }}"
+                                    class="form-control mb-5"
+                                    data-id="{{ $recipeIngredient->pivot->ingredient_id }}">
+                                <option value="" selected></option>
+                                @foreach($ingredients as $key => $ingredient)
+                                    <option value="{{ $key }}">{{ $ingredient }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <script>
+                            $('#ingredient-{{ $recipeIngredient->pivot->ingredient_id }}').select2({
+                                placeholder: "Выберите ингредиент",
+                                allowClear: true
+                            });
+
+                            $('#ingredient-{{ $recipeIngredient->pivot->ingredient_id }}').val({{ $recipeIngredient->pivot->ingredient_id }}).trigger('change');
+                        </script>
+                    @endforeach
 
                 </div>
             </div>
@@ -53,10 +71,13 @@
                 <div class="form-group">
                     <label for="amount-1" class="col-form-label pl-0 mb-2">Количество</label>
 
-                    <div class="col pl-0">
-                        <input id="amount-1" type="text" class="form-control" name="amount[]" required
-                               autofocus>
-                    </div>
+                    @foreach($recipesIngredients as $recipeIngredient)
+                        <div class="col pl-0">
+                            <input id="amount-{{ $recipeIngredient->pivot->ingredient_id }}" type="text"
+                                   class="form-control mb-3" name="amount[]"
+                                   value="{{ $recipeIngredient->pivot->amount }}" required autofocus>
+                        </div>
+                    @endforeach
 
                 </div>
             </div>
@@ -64,6 +85,18 @@
             <div class="col-2 text-center">
                 <div class="form-group">
                     <label for="amount" class="col-form-label pl-0 mb-3">Удалить</label>
+
+                    @foreach($recipesIngredients as $recipeIngredient)
+                        <div class="col-2 text-center">
+                            <div class="form-group">
+                                <div class="col">
+                                    <img id="action-destroy-ingredient-select" src="img/delete.png"
+                                         data-id="{{ $recipeIngredient->pivot->ingredient_id }}" alt="delete">
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>
@@ -120,7 +153,7 @@
 
     <div class="row mb-3">
         <div class="col text-right">
-            <a id="save-recipe" href="#">Сохранить рецепт</a>
+            <a id="save-recipe" href="#" data-recipeId="{{ $recipe->id }}">Сохранить рецепт</a>
         </div>
     </div>
 </form>

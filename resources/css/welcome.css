@@ -163,7 +163,7 @@ hr {
     text-align: left;
 }
 
-#delete, #action-destroy-ingredient {
+#delete, #action-destroy-ingredient-select {
     cursor: pointer;
 }
 
