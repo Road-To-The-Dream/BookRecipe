@@ -29,7 +29,7 @@ $(document).ready(function () {
     $(document).on('click', '#action-edit-recipe', function (event) {
         event.preventDefault();
         $('#flag-update-or-create-recipe').val('update');
-        editRecipe($(this));
+        getRecipe($(this));
     });
 
     $(document).on('click', '#action-destroy-recipe', function (event) {
@@ -48,7 +48,6 @@ $(document).ready(function () {
 
     $(document).on('click', '#save-recipe', function (event) {
         event.preventDefault();
-
         ($('#flag-update-or-create-recipe').val() === 'create') ? saveRecipe() : updateRecipe();
     });
 
@@ -60,6 +59,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#add-ingredient', function (event) {
         event.preventDefault();
+        $('#flag-update-or-create-recipe').val('create');
         formCreateIngredient();
     });
 
@@ -67,6 +67,8 @@ $(document).ready(function () {
         event.preventDefault();
         saveIngredient();
     });
+
+
 
     $(document).on('click', '#action-destroy-ingredient', function (event) {
         event.preventDefault();
@@ -396,7 +398,7 @@ function destroyIngredient(link) {
     });
 }
 
-function editRecipe(link) {
+function getRecipe(link) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -1,5 +1,4 @@
 <form id="form-create-recipe">
-    <!-- Block name, description -->
     <div class="row mb-3">
         <div class="col my-recipe">
             Добавление Игредиента
