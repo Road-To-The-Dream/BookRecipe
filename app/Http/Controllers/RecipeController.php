@@ -18,7 +18,15 @@ class RecipeController extends Controller
      */
     public function index(): View
     {
-        return view('home', [
+        return view('home');
+    }
+
+    /**
+     * @return View
+     */
+    public function getRecipes(): View
+    {
+        return view('recipe.showAll', [
             'recipes' => Recipe::where('user_id', Auth::id())->get()
         ]);
     }
@@ -63,7 +71,7 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::find($id);
 
-        return view('recipe.show', [
+        return view('recipe.showOne', [
             'recipe' => $recipe,
             'ingredients' => $recipe->ingredients()->get()
         ]);
@@ -103,11 +111,9 @@ class RecipeController extends Controller
             $recipe->ingredients()->sync(
                 $recipeService->formingIngredientsInfoArray($request, $recipeService->formingIngredientsArray($request))
             );
-
-            return true;
+        } else {
+            return response()->view('errors.403', [], 403);
         }
-
-        return response()->view('errors.403', [], 403);
     }
 
     /**

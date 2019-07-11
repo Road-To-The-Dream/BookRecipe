@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateIngredientRequest extends FormRequest
+class UpdateIngredientAmount extends FormRequest
 {
     /**
      * @return bool
@@ -20,7 +20,7 @@ class UpdateIngredientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ingredientName' => 'required'
+            'ingredientAmount' => 'required'
         ];
     }
 
@@ -30,7 +30,7 @@ class UpdateIngredientRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'ingredientName.required' => 'Field name is empty'
+            'ingredientAmount.required' => 'Field amount is empty'
         ];
     }
 }

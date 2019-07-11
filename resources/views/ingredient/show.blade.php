@@ -33,7 +33,7 @@
                     <tr>
                         <td>{{ $ingredient->name }}</td>
                         <td class="text-center" style="padding: 10px 0">
-                            <a id="action-edit-ingredient" href="recipe/{{ $ingredient->id }}/edit">
+                            <a id="action-edit-ingredient" href="ingredient/{{ $ingredient->id }}/edit">
                                 <img src="{{ asset('img/edit.png') }}" alt="edit">
                             </a>
                             <a id="action-destroy-ingredient"

@@ -1,7 +1,14 @@
 $(document).ready(function () {
+    getRecipes();
+
+    $(document).on('click', '#show-recipes', function (event) {
+        event.preventDefault();
+        getRecipes();
+    });
+
     $(document).on('click', '#show-ingredients', function (event) {
         event.preventDefault();
-        showListIngredients();
+        getIngredients();
     });
 
     $(document).on('click', '#modal-save-ingredient', function () {
@@ -23,7 +30,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#action-show-recipe', function (event) {
         event.preventDefault();
-        showRecipe($(this));
+        getRecipe($(this));
     });
 
     $(document).on('click', '#action-edit-recipe', function (event) {
@@ -48,7 +55,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#save-recipe', function (event) {
         event.preventDefault();
-        ($('#flag-update-or-create-recipe').val() === 'create') ? saveRecipe() : updateRecipe();
+        ($('#flag-update-or-create-recipe').val() === 'create') ? saveRecipe() : editRecipe();
     });
 
     $(document).on('click', '#add-recipe', function (event) {
@@ -65,16 +72,115 @@ $(document).ready(function () {
 
     $(document).on('click', '#save-ingredient', function (event) {
         event.preventDefault();
-        saveIngredient();
+        ($('#flag-update-or-create-recipe').val() === 'create') ? saveIngredient() : editIngredient();
     });
 
-
+    $(document).on('click', '#action-edit-ingredient', function (event) {
+        event.preventDefault();
+        $('#flag-update-or-create-recipe').val('update');
+        showIngredient($(this));
+    });
 
     $(document).on('click', '#action-destroy-ingredient', function (event) {
         event.preventDefault();
         destroyIngredient($(this));
     });
 });
+
+//handler Recipe
+function getRecipes() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: 'get-all-recipes',
+        beforeSend: function () {
+            $('.content').empty();
+            $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +
+                '                            <div class="spinner-border" role="status">\n' +
+                '                            </div>\n' +
+                '                            <p class="mt-1 ml-3">Загрузка . . .</p>\n' +
+                '                        </div>');
+        },
+        success: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        },
+        error: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        }
+    })
+}
+
+function getRecipe(link) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: link.attr('href'),
+        beforeSend: function () {
+            $('.content').empty();
+            $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +
+                '                            <div class="spinner-border" role="status">\n' +
+                '                            </div>\n' +
+                '                            <p class="mt-1 ml-3">Загрузка . . .</p>\n' +
+                '                        </div>');
+        },
+        success: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        },
+        error: function (response) {
+            $('.content').empty();
+            $('.content').append(response);
+        }
+    })
+}
+
+function editRecipe() {
+    let data = new FormData(document.getElementById("form-update-recipe"));
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: $('#form-update-recipe').attr('action'),
+        method: 'post',
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function () {
+            $.notify(
+                "Рецепт успешно обновлён !", {
+                    className: 'success',
+                    globalPosition: 'bottom right'
+                }
+            );
+
+            getRecipes();
+        },
+        error: function (response) {
+            console.log(response);
+            $('#recipe-error').empty();
+            $('#recipe-error').css('display', 'block');
+
+            $.each(response['responseJSON']['errors'], function (key, value) {
+                $('#recipe-error').append(key + ": " + value + "</br>");
+            });
+        }
+    })
+}
 
 function formCreateRecipe() {
     $.ajax({
@@ -99,6 +205,80 @@ function formCreateRecipe() {
             $('.content').append(response);
         }
     })
+}
+
+function destroyRecipe(link) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.post({
+        type: link.data('method'),
+        url: link.attr('href')
+    }).done(function () {
+        location.reload();
+    });
+}
+
+function saveRecipe() {
+    let data = new FormData(document.getElementById("form-create-recipe"));
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: $('#form-create-recipe').attr('action'),
+        method: $('#form-create-recipe').attr('method'),
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function () {
+            $.notify(
+                "Рецепт успешно добавлен !", {
+                    className: 'success',
+                    globalPosition: 'bottom right'
+                }
+            );
+
+            setTimeout(function () {
+                window.location.href = "/recipe";
+            }, 2000);
+        },
+        error: function (response) {
+            $('#recipe-error').empty();
+            $('#recipe-error').css('display', 'block');
+
+            $.each(response['responseJSON']['errors'], function (key, value) {
+                $('#recipe-error').append(key + ": " + value + "</br>");
+            });
+        }
+    })
+}
+//handler Recipe
+
+//handler Ingredient
+function destroyIngredient(link) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.post({
+        type: link.data('method'),
+        url: link.attr('href')
+    }).done(function () {
+        getIngredients();
+
+        setTimeout(function () {
+            $('#message-destroy-ingredient').fadeOut("slow");
+        }, 2000);
+    });
 }
 
 function formCreateIngredient() {
@@ -168,7 +348,7 @@ function saveIngredient() {
                 }
             );
 
-            showListIngredients();
+            getIngredients();
         },
         error: function (response) {
             $('#ingredient-error').css('display', 'block');
@@ -233,88 +413,6 @@ function appendIngredients(data, selectId) {
     initializeSelectIngredients(selectId);
 }
 
-function destroyRecipe(link) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.post({
-        type: link.data('method'),
-        url: link.attr('href')
-    }).done(function () {
-        location.reload();
-    });
-}
-
-function saveRecipe() {
-    let data = new FormData(document.getElementById("form-create-recipe"));
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        url: $('#form-create-recipe').attr('action'),
-        method: $('#form-create-recipe').attr('method'),
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        success: function () {
-            $.notify(
-                "Рецепт успешно добавлен !", {
-                    className: 'success',
-                    globalPosition: 'bottom right'
-                }
-            );
-
-            setTimeout(function () {
-                window.location.href = "/recipe";
-            }, 2000);
-        },
-        error: function (response) {
-            $('#recipe-error').empty();
-            $('#recipe-error').css('display', 'block');
-
-            $.each(response['responseJSON']['errors'], function (key, value) {
-                $('#recipe-error').append(key + ": " + value + "</br>");
-            });
-        }
-    })
-}
-
-function showRecipe(link) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.ajax({
-        url: link.attr('href'),
-        type: link.data('method'),
-        beforeSend: function () {
-            $('.content').empty();
-            $('.content').append('<div class="d-flex justify-content-center mt-3">\n' +
-                '                            <div class="spinner-border" role="status">\n' +
-                '                            </div>\n' +
-                '                            <p class="mt-1 ml-3">Загрузка . . .</p>\n' +
-                '                        </div>');
-        },
-        success: function (response) {
-            $('.content').empty();
-            $('.content').append(response);
-        },
-        error: function (response) {
-            $('.content').empty();
-            $('.content').append(response);
-        }
-    })
-}
-
 function updateIngredientAmount(link) {
     $.ajaxSetup({
         headers: {
@@ -356,7 +454,7 @@ function updateIngredientAmount(link) {
     })
 }
 
-function showListIngredients() {
+function getIngredients() {
     $.ajax({
         url: 'ingredient',
         type: 'get',
@@ -379,26 +477,7 @@ function showListIngredients() {
     })
 }
 
-function destroyIngredient(link) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.post({
-        type: link.data('method'),
-        url: link.attr('href')
-    }).done(function () {
-        showListIngredients();
-
-        setTimeout(function () {
-            $('#message-destroy-ingredient').fadeOut("slow");
-        }, 2000);
-    });
-}
-
-function getRecipe(link) {
+function showIngredient(link) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -427,9 +506,7 @@ function getRecipe(link) {
     })
 }
 
-function updateRecipe() {
-    let data = new FormData(document.getElementById("form-update-recipe"));
-
+function editIngredient() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -437,23 +514,20 @@ function updateRecipe() {
     });
 
     $.ajax({
-        url: $('#form-update-recipe').attr('action'),
-        method: 'post',
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
+        url: $('#form-update-ingredient').attr('action'),
+        method: 'put',
+        data: {
+            ingredientName: $('#ingredientName').val()
+        },
         success: function () {
             $.notify(
-                "Рецепт успешно обновлён !", {
+                "Ингредиент успешно обновлён !", {
                     className: 'success',
                     globalPosition: 'bottom right'
                 }
             );
 
-            setTimeout(function () {
-                window.location.href = "/recipe";
-            }, 2000);
+            getIngredients();
         },
         error: function (response) {
             $('#recipe-error').empty();
@@ -465,3 +539,4 @@ function updateRecipe() {
         }
     })
 }
+//handler Ingredient

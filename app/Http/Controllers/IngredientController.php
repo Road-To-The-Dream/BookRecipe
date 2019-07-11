@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIngredientRequest;
+use App\Http\Requests\UpdateIngredientAmount;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Services\Utility;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class IngredientController extends Controller
@@ -64,17 +64,30 @@ class IngredientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+
+        return view('ingredient.update', [
+            'ingredient' => $ingredient
+        ]);
     }
 
     /**
-     * @param Request $request
+     * @param UpdateIngredientRequest $request
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateIngredientRequest $request, $id)
     {
+        if ($request->ajax()) {
+            $input = Utility::cleanField([
+                $request->get('ingredientName')
+            ]);
 
+            $ingredient = Ingredient::find($id);
+            $ingredient->update(['name' => $input[0]]);
+        } else {
+            return response()->view('errors.403', [], 403);
+        }
     }
 
     /**
@@ -91,11 +104,11 @@ class IngredientController extends Controller
     }
 
     /**
-     * @param UpdateIngredientRequest $request
+     * @param UpdateIngredientAmount $request
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function updateAmount(UpdateIngredientRequest $request, $id)
+    public function updateAmount(UpdateIngredientAmount $request, $id)
     {
         if ($request->ajax()) {
             $input = Utility::cleanField([$request->get('ingredientAmount')]);

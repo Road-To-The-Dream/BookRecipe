@@ -153,7 +153,7 @@
 
     <div class="row mb-3">
         <div class="col text-right">
-            <a id="save-recipe" href="#" data-recipeId="{{ $recipe->id }}">Сохранить рецепт</a>
+            <a id="save-recipe" href="#">Сохранить рецепт</a>
         </div>
     </div>
 </form>
